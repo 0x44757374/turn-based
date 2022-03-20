@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+service LobbyService {
+	rpc CreateLobby (CreateLobbyRequest) returns (Lobby) {}
+	rpc CreateUser (CreateUserRequest) returns (User) {}
+	rpc JoinLobby (JoinLobbyRequest) returns (Lobby) {}
+}
+
+message Lobby {
+	string key = 1;
+	string name = 2;
+	User owner = 3;
+	repeated User members = 4; 
+}
+
+message JoinLobbyRequest {
+	string lobby_key = 1;
+	string name = 2;
+	int32 color = 3;
+}
+
+message CreateLobbyRequest {
+	string name = 1;
+}
+
+message User {
+	string key = 1;
+	string name = 2;
+	int32 color = 3;
+}
+
+message CreateUserRequest {
+	string name = 1;
+	int32 color = 2;
+}

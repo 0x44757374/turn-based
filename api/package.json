@@ -1,0 +1,20 @@
+{
+	"scripts": {
+		"server": "ts-node server.ts",
+		"test-client": "ts-node test/client.ts",
+		"proto-copy": "mkdir proto && find ../shared -iname *.proto -exec cp '{}' ./proto/ ';'",
+		"proto": "npm run proto-copy && node_modules/.bin/proto-loader-gen-types --longs=String --enums=String --defaults --oneofs --grpcLib=@grpc/grpc-js --outDir=proto/ proto/*.proto",
+		"nothing": "echo ''"
+	},
+	"dependencies": {
+		"@grpc/grpc-js": "^1.5.9",
+		"@grpc/proto-loader": "^0.6.9",
+		"dotenv": "^16.0.0",
+		"express": "^4.17.3",
+		"ws": "^8.5.0"
+	},
+	"devDependencies": {
+		"@types/node": "^17.0.21",
+		"@types/ws": "^8.5.3"
+	}
+}

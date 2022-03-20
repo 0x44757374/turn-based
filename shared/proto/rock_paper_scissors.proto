@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package rockpaperscissors;
+
+service RockPaperScissorsGameService {
+	rpc CreateGame (RockPaperScissorsCreateGameRequest) returns (RockPaperScissorsGame){}
+	rpc JoinGame (RockPaperScissorsJoinGameRequest) returns (RockPaperScissorsGame){}
+	rpc LeaveGame (RockPaperScissorsRequest) returns (RockPaperScissorsGame){}
+	rpc StartGame (RockPaperScissorsRequest) returns (RockPaperScissorsGame){}
+	rpc ReadyUp (RockPaperScissorsRequest) returns (RockPaperScissorsPlayerStatus){}
+	rpc EndTurn (RockPaperScissorsTurnRequest) returns (RockPaperScissorsPlayerStatus){}
+}
+
+message RockPaperScissorsTurnRequest {
+	string game_id = 1;
+	string player_id = 2;
+	Choice choice = 3;
+}
+
+message RockPaperScissorsCreateGameRequest {
+	uint32 best_of = 1;
+}
+
+message RockPaperScissorsJoinGameRequest {
+	string game_id = 1;
+}
+
+message RockPaperScissorsRequest {
+	string game_id = 1;
+	string player_id = 2;
+}
+
+message RockPaperScissorsPlayer {
+	string name = 1;
+	uint32 color = 2;
+}
+
+message RockPaperScissorsRoundResult {
+	uint32 round = 1;
+	bool winner = 2;
+	Choice player_choice = 3;
+	Choice opponent_choice = 4;
+}
+
+message RockPaperScissorsScore {
+	uint32 player = 1;
+	uint32 opponent = 2;
+	repeated RockPaperScissorsRoundResult rounds = 3;
+}
+
+message RockPaperScissorsGameState {
+	string title = 1;
+	uint32 player_score = 2;
+	uint32 opponent_score = 3;
+}
+
+message RockPaperScissorsPlayerStatus {
+	bool player_ready = 1;
+	bool opponent_ready = 2;
+}
+
+message RockPaperScissorsGame {
+	string game_id = 1;
+	string player_id = 2;
+	uint32 best_of = 3;
+	GameStatus status = 4;
+	RockPaperScissorsPlayer player = 5;
+	RockPaperScissorsPlayer opponent = 6;
+}
+
+enum GameStatus {
+	WAITING_FOR_PLAYERS = 0;
+	READY_TO_START = 1;
+	IN_PROGRESS = 2;
+	FINISHED = 3;
+}
+
+enum Choice {
+	ROCK = 0;
+	PAPER = 1;
+	SCISSORS = 2;
+	PACIFISM = 3;
+}
+
